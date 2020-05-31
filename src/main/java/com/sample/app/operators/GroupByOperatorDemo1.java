@@ -21,15 +21,13 @@ public class GroupByOperatorDemo1 {
 		Employee emp9 = new Employee(9, "Raju", "Antony", 40, "Trivendram", 198765);
 		Employee emp10 = new Employee(10, "Brijesh", "Krishnan", 34, "Trivendram", 100000);
 		Employee emp11 = new Employee(11, "Raju", "Antony", 40, "Trivendram", 198765);
-		Employee emp12 = new Employee(12, "Brijesh", "Krishnan", 34, "Trivendram", 100000);
 
-		List<Employee> emps = Arrays.asList(emp1, emp2, emp3, emp4, emp5, emp6, emp7, emp8, emp9, emp10, emp11, emp12);
+		List<Employee> emps = Arrays.asList(emp1, emp2, emp3, emp4, emp5, emp6, emp7, emp8, emp9, emp10, emp11, emp11);
 
-		
-		Observable<String> countries = Observable.just("India", "Canada", "China", "Nepal", "Australia", "America",
-				"Zimbabwe", "Angola");
+		Observable<Employee> empsObservable = Observable.fromIterable(emps);
 
-		Observable<GroupedObservable<Integer, String>> countryNamesByLength = countries.groupBy(s -> s.length());
+		Observable<GroupedObservable<String, Employee>> countryNamesByLength = empsObservable
+				.groupBy(emp -> emp.getCity());
 
 		countryNamesByLength.flatMapSingle(group -> group.toList()).subscribe(System.out::println);
 
